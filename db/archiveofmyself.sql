@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 20. Aug 2023 um 20:23
+-- Erstellungszeit: 20. Aug 2023 um 20:56
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.1.12
 
@@ -40,8 +40,8 @@ CREATE TABLE `videos` (
 --
 
 INSERT INTO `videos` (`url`, `likes`, `dislikes`, `comments`, `id`) VALUES
-('33444', 12, 28, 124, 1),
-('[value-1]', 0, 0, 0, 2);
+('Luz.mp4', 12, 28, 124, 1),
+('Hunter.mp4', 0, 0, 0, 2);
 
 --
 -- Indizes der exportierten Tabellen
