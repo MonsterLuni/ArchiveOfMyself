@@ -5,7 +5,7 @@
  */
 ?>
 <style>
-    <?php include 'styles/body.css'; ?>
+    <?php include 'styles/videos.css'; ?>
 </style>
 <div id="body">
     <?php
