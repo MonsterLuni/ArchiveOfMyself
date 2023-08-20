@@ -21,7 +21,13 @@
     $query = $conn->query("SELECT * FROM videos");
     $videos = $query->fetch_all();
     foreach ($videos as $video) {
+
         echo "<p>URL: $video[0]</p>";
+        echo "
+        <video width='400' height='800' controls>
+            <source src='assets/testvideos/${video[0]}' type='video/mp4'>
+            Your browser does not support the video tag.
+        </video>";
         echo "<p>Likes: $video[1]</p>";
         echo "<p>Dislikes: $video[2]</p>";
         echo "<p>Comments: $video[3]</p>";
