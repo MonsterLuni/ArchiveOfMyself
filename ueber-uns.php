@@ -11,9 +11,11 @@
 
 
         include "Include/header.php";
+        require 'data.php';
         ?>
     </header>
 
 <?php
 echo "<h1>Ueber-Uns</h1>";
+add_user()
 ?>

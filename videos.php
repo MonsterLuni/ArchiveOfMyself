@@ -4,28 +4,30 @@
  * This file is used for the body on each page.
  */
 require 'repository/Video_Repository.php';
-require 'data.php';
+//require 'data.php';
 ?>
 <style>
-    <?php include 'styles/videos.css'; ?>
+    <?php
+    include 'styles/videos.css';
+    ?>
 </style>
 <div id="body">
     <?php
 
-    $videos = videos_fetch_all();
     // Url, Likes, Dislikes, text, Beschreibung, ID
     if(array_key_exists('Like', $_POST)) {
-        comment_review(1,true);
-        unset($_POST);
-        $_POST = array();
-        var_dump($_POST);
+        //if(verify(1,0,"liked_comments")){
+            comment_review(1,true);
+            unset($_POST);
+            $_POST = array();
+        //}
     }
     if(array_key_exists('Dislike', $_POST)) {
         comment_review(1,false);
         unset($_POST);
         $_POST = array();
-        var_dump($_POST);
     }
+    $videos = videos_fetch_all();
     foreach ($videos as $video) {
         echo "
         <video width='400' height='800' controls>
