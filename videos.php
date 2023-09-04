@@ -30,7 +30,7 @@ require 'repository/Video_Repository.php';
     $videos = videos_fetch_all();
     foreach ($videos as $video) {
         echo "
-        <video width='400' height='800' controls>
+        <video width='700' height='1244.44' controls>
             <source src='assets/testvideos/${video[0]}' type='video/mp4'>
             Your browser does not support the video tag.
         </video>";
@@ -38,10 +38,10 @@ require 'repository/Video_Repository.php';
         echo "<a>Dislikes: $video[2]</a>";
         $comments = comments_fetch($video);
         $commentslenght = count($comments);
-        echo "<a onclick='ABCD(${video[5]})'>Comments: ${commentslenght}</a>";
+        echo "<a onclick='togVisibility(${video[5]})' class='commentsSelectable'>Comments: ${commentslenght}</a>";
         if(!empty($comments)){
             foreach ($comments as $comment){
-                echo "<div class='comment${video[5]}' style='display: none'>
+                echo "<div class='comment${video[5]} commentbox' style='display: none'>
             <p>$comment[0]</p>
             <form id='formId' method='post'>
             <p>LIKES: $comment[1]</p>
@@ -61,16 +61,18 @@ require 'repository/Video_Repository.php';
 
 <script>
         let shown = true;
-        function ABCD(id){
-            let comments = document.querySelector(".comment" + id);
-            if (comments.getAttribute("style") === "display: block"){
-                comments.setAttribute("style","display: none");
-                shown = false;
-            }
-            else{
-                comments.setAttribute("style","display: block");
-                shown = true;
-            }
+        function togVisibility(id){
+            let comments = document.getElementsByClassName("comment" + id);
+            Array.prototype.forEach.call(comments, comment => {
+                if (comment.getAttribute("style") === "display: block"){
+                    comment.setAttribute("style","display: none");
+                    shown = false;
+                }
+                else{
+                    comment.setAttribute("style","display: block");
+                    shown = true;
+                }
+            })
         }
 
         if ( window.history.replaceState ) {

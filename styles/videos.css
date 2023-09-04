@@ -10,3 +10,12 @@ video{
 ::-webkit-scrollbar{
     width: 0;
 }
+.commentsSelectable{
+    cursor: pointer;
+}
+video{
+    box-shadow: 5px 5px 10px #2d1c1c;
+}
+.commentbox{
+    background-color: blue;
+}
