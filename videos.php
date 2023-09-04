@@ -36,11 +36,13 @@ require 'repository/Video_Repository.php';
         </video>";
         echo "<a>Likes: $video[1]</a>";
         echo "<a>Dislikes: $video[2]</a>";
-        echo "<h2>Comments:</h2>";
         $comments = comments_fetch($video);
-        foreach ($comments as $comment){
-            echo "<p>$comment[0]</p>";
-            echo "
+        $commentslenght = count($comments);
+        echo "<a onclick='ABCD(${video[5]})'>Comments: ${commentslenght}</a>";
+        if(!empty($comments)){
+            foreach ($comments as $comment){
+                echo "<div class='comment${video[5]}' style='display: none'>
+            <p>$comment[0]</p>
             <form id='formId' method='post'>
             <p>LIKES: $comment[1]</p>
             <input type='submit' name='Like'
@@ -48,7 +50,9 @@ require 'repository/Video_Repository.php';
             <p>Dislikes: $comment[2]</p>
             <input type='submit' name='Dislike'
                 class='button' value='Dislike' />
-            </form>";
+            </form>
+            </div>";
+            }
         }
         echo "<br><br><br><br>";
     }
@@ -56,7 +60,20 @@ require 'repository/Video_Repository.php';
 </div>
 
 <script>
+        let shown = true;
+        function ABCD(id){
+            let comments = document.querySelector(".comment" + id);
+            if (comments.getAttribute("style") === "display: block"){
+                comments.setAttribute("style","display: none");
+                shown = false;
+            }
+            else{
+                comments.setAttribute("style","display: block");
+                shown = true;
+            }
+        }
+
         if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
+            window.history.replaceState( null, null, window.location.href );
+        }
 </script>
