@@ -11,11 +11,11 @@
 
 
         include "Include/header.php";
-        require 'data.php';
+        require 'repository/User_Repository.php';
         ?>
     </header>
 
 <?php
 echo "<h1>Ueber-Uns</h1>";
-add_user()
+add_user("Testigal","Beschreibung","bild.png")
 ?>
