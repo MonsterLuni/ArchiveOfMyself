@@ -11,6 +11,7 @@
     ?>
 </header>
 <head>
+    <title></title>
 <?php
     echo "<h1>Home</h1>";
 ?>

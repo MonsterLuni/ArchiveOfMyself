@@ -4,7 +4,7 @@
  * This file is used for the body on each page.
  */
 require 'repository/Video_Repository.php';
-//require 'User_Repository.php';
+//require 'repository/user_intermediary_video.php';
 ?>
 <style>
     <?php
@@ -34,17 +34,19 @@ require 'repository/Video_Repository.php';
     foreach ($videos as $video) {
         echo "
         <video width='700' height='1244.44' controls>
-            <source src='assets/testvideos/{$video[0]}' type='video/mp4'>
+            <source src='assets/testvideos/$video[0]' type='video/mp4'>
             Your browser does not support the video tag.
         </video>";
-        echo "<a onclick='send_ajax($video[5],`plus`)'>Likes: $video[1]</a>";
-        echo "<a onclick='send_ajax($video[5],`minus`)'>Dislikes: $video[2]</a>";
+        echo "<div class='review'>
+              <a onclick='send_ajax($video[5],`plus`)' class='review_button' id='$video[5]plus'>Likes: $video[1]</a>
+              <a onclick='send_ajax($video[5],`minus`)' class='review_button' id='$video[5]minus'>Dislikes: $video[2]</a>
+              </div>";
         $comments = comments_fetch($video);
         $commentslenght = count($comments);
-        echo "<a onclick='togVisibility({$video[5]})' class='commentsSelectable'>Comments: {$commentslenght}</a>";
+        echo "<a onclick='togVisibility($video[5])' class='commentsSelectable'>Comments: $commentslenght</a>";
         if(!empty($comments)){
             foreach ($comments as $comment){
-                echo "<div class='comment{$video[5]} commentbox' style='display: none'>
+                echo "<div class='comment$video[5] commentbox' style='display: none'>
             <p>$comment[0]</p>
             <form id='formId' method='post'>
             <p>LIKES: $comment[1]</p>
@@ -54,7 +56,7 @@ require 'repository/Video_Repository.php';
             <input type='submit' name='Dislike'
                 class='button' value='Dislike' />
             <input type='submit' name='id_comment'
-                class='button' value='{$comment[4]}' />
+                class='button' value='$comment[4]' />
             </form>
             </div>";
             }
@@ -91,8 +93,12 @@ require 'repository/Video_Repository.php';
             const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
-                    alert(this.responseText);
+                    ////alert(this.responseText);
                     //TODO: Add function to increment or decrement like & dislike. Not in Database, just in UI
+                    // INCREMENT
+                    let my_button = document.getElementById(id + operator);
+                    my_button.style.backgroundColor = "blue";
+                    // So that location.reload() isn't needed anymore.
                     location.reload();
                 }
             };

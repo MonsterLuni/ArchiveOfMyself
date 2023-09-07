@@ -17,10 +17,10 @@
         echo "<title>$specific_tab</title>";
         foreach ($tabs as $tab) {
             if($tab[1] == $specific_tab){
-                echo "<a class='tab' id='selected' href='/ArchiveOfMyself/{$tab[1]}'>{$tab[0]}</a>";
+                echo "<a class='tab' id='selected' href='/ArchiveOfMyself/$tab[1]'>$tab[0]</a>";
             }
             else{
-                echo "<a class='tab' href='/ArchiveOfMyself/{$tab[1]}'>{$tab[0]}</a>";
+                echo "<a class='tab' href='/ArchiveOfMyself/$tab[1]'>$tab[0]</a>";
             }
         }
         ?>

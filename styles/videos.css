@@ -13,9 +13,36 @@ video{
 .commentsSelectable{
     cursor: pointer;
 }
+a{
+    user-select: none;
+    cursor: pointer;
+}
 video{
     box-shadow: 5px 5px 10px #2d1c1c;
 }
 .commentbox{
     background-color: blue;
+}
+.review_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 40%;
+    background-color: #462929;
+    border-radius: 10px;
+}
+.review_button:hover{
+    background-color: #352222;
+}
+.review_button:active{
+    background-color: #201919;
+}
+.review{
+    width: 700px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
 }
