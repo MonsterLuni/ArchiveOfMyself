@@ -1,4 +1,5 @@
 <?php
+require "user_intermediary_video.php";
 /**
  * @author Luca Moser
  * This file is used for the body on each page.
@@ -34,25 +35,24 @@ function comments_fetch($video): array{
     $query = $conn->query("SELECT * FROM comments WHERE video_fk LIKE $video[5] ORDER BY RAND()");
     return $query->fetch_all();
 }
-function video_review($year_id,$operator,$id_user): bool{
+function video_review($video_id,$operator,$user_id): bool{
     global $conn;
-    var_dump($operator);
-    $query = $conn->query("SELECT * FROM user_intermediary_video WHERE fk_user_id LIKE $id_user AND fk_video_id LIKE $year_id");
-    $result = $query->fetch_all();
-    $query = $conn->query("SELECT * FROM videos WHERE id LIKE $year_id");
+    $result = get_intermediary($user_id,$video_id);
+    $query = $conn->query("SELECT * FROM videos WHERE id LIKE $video_id");
     $year = $query->fetch_all();
     //TODO: check if video is liked or disliked
     if(empty($result)) {
-        //TODO: Evtl Natalie Schuhmacher fragen warum die scheisse hier nicht funktioniert hat.
+        //Evtl Natalie Schuhmacher fragen warum die scheisse hier nicht funktioniert hat.
         if ($operator == "plus") {
             var_dump("TRUE");
             $like = $year[0][1] + 1;
-            $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $year_id");
+            $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
         } elseif ($operator == "minus") {
             var_dump("FALSE");
             $dislike = $year[0][2] + 1;
-            $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $year_id");
+            $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
         }
+        add_intermediary($user_id,$video_id);
         return true;
     }
     else{
@@ -60,12 +60,13 @@ function video_review($year_id,$operator,$id_user): bool{
         if ($operator == "plus") {
             var_dump("TRUE");
             $like = $year[0][1] - 1;
-            $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $year_id");
+            $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
         } elseif ($operator == "minus") {
             var_dump("FALSE");
             $dislike = $year[0][2] - 1;
-            $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $year_id");
+            $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
         }
+        delete_intermediary($user_id,$video_id);
         return false;
     }
 

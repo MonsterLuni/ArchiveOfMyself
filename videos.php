@@ -90,7 +90,7 @@ require 'repository/Video_Repository.php';
             data.append('operator',operator);
             const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState === 4 && this.status === 200) {
                     alert(this.responseText);
                     //TODO: Add function to increment or decrement like & dislike. Not in Database, just in UI
                     location.reload();
