@@ -37,8 +37,8 @@ require 'repository/Video_Repository.php';
             <source src='assets/testvideos/{$video[0]}' type='video/mp4'>
             Your browser does not support the video tag.
         </video>";
-        echo "<a onclick='send_ajax({$video[5]},true)'>Likes: $video[1]</a>";
-        echo "<a onclick='send_ajax({$video[5]},false)'>Dislikes: $video[2]</a>";
+        echo "<a onclick='send_ajax($video[5],`plus`)'>Likes: $video[1]</a>";
+        echo "<a onclick='send_ajax($video[5],`minus`)'>Dislikes: $video[2]</a>";
         $comments = comments_fetch($video);
         $commentslenght = count($comments);
         echo "<a onclick='togVisibility({$video[5]})' class='commentsSelectable'>Comments: {$commentslenght}</a>";
@@ -88,14 +88,15 @@ require 'repository/Video_Repository.php';
             let data = new FormData();
             data.append('id',id);
             data.append('operator',operator);
-            var request = new XMLHttpRequest();
+            const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     alert(this.responseText);
-                    //TODO: Add function to increment or decrement like & dislike.
+                    //TODO: Add function to increment or decrement like & dislike. Not in Database, just in UI
+                    location.reload();
                 }
             };
-            request.open("POST", "ajax_request.php", true);
+            request.open("POST", "ajax_request.php");
             request.send(data);
         }
 </script>
