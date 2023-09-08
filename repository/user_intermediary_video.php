@@ -14,12 +14,16 @@ function get_intermediary($user_id, $video_id): array{
     $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_video_id` LIKE $video_id AND `fk_user_id` LIKE $user_id");
     return $query->fetch_all();
 }
-function add_intermediary($user_id, $video_id): bool{
+function add_intermediary($user_id, $video_id,$like,$dislike): bool{
     global $conn;
-    $conn->query("INSERT INTO `user_intermediary_video`(`fk_user_id`, `fk_video_id`) VALUES ('$user_id','$video_id')");
+    $conn->query("INSERT INTO `user_intermediary_video`(`fk_user_id`, `fk_video_id`,`bool_like`,`bool_dislike`) VALUES ('$user_id','$video_id','$like','$dislike')");
     return true;
 }
-
+function update_intermediary($video_id,$user_id,$like,$dislike): bool{
+    global $conn;
+    $conn->query("UPDATE `user_intermediary_video` SET `bool_like`='$like',`bool_dislike`='$dislike' WHERE `fk_video_id` LIKE $video_id AND `fk_user_id` LIKE $user_id");
+    return true;
+}
 function delete_intermediary($user_id, $video_id): bool{
     global $conn;
     $conn->query("DELETE FROM `user_intermediary_video` WHERE `fk_video_id` LIKE $video_id AND `fk_user_id` LIKE $user_id");

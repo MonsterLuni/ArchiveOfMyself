@@ -42,31 +42,52 @@ function video_review($video_id,$operator,$user_id): bool{
     $year = $query->fetch_all();
     //TODO: check if video is liked or disliked
     if(empty($result)) {
-        //Evtl Natalie Schuhmacher fragen warum die scheisse hier nicht funktioniert hat.
         if ($operator == "plus") {
-            var_dump("TRUE");
             $like = $year[0][1] + 1;
             $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
+            add_intermediary($user_id,$video_id,true,false);
         } elseif ($operator == "minus") {
-            var_dump("FALSE");
             $dislike = $year[0][2] + 1;
             $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
+            add_intermediary($user_id,$video_id,false,true);
         }
-        add_intermediary($user_id,$video_id);
         return true;
     }
     else{
-        var_dump("Ich habs geschafft");
-        if ($operator == "plus") {
-            var_dump("TRUE");
-            $like = $year[0][1] - 1;
-            $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
-        } elseif ($operator == "minus") {
-            var_dump("FALSE");
-            $dislike = $year[0][2] - 1;
-            $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
+        // 2 == LIKE ; 3 == DISLIKE
+        if($result[0][2] && $result[0][3]){
+            var_dump("beide");
+            if ($operator == "plus") {
+                $like = $year[0][1] + 1;
+                $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
+                $like = $year[0][2] - 1;
+                $conn->query("UPDATE videos SET `dislike`='$like' WHERE id LIKE $video_id");
+                update_intermediary($user_id,$video_id,true,false);
+            } elseif ($operator == "minus") {
+                $like = $year[0][1] - 1;
+                $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
+                $like = $year[0][2] + 1;
+                $conn->query("UPDATE videos SET `dislike`='$like' WHERE id LIKE $video_id");
+                update_intermediary($user_id,$video_id,false,true);
+            }
         }
-        delete_intermediary($user_id,$video_id);
+        elseif($result[0][2] || $result[0][3]){
+            var_dump("eins oder das andere");
+            if ($operator == "plus") {
+                $like = $year[0][1] - 1;
+                $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
+                update_intermediary($user_id,$video_id,false,false);
+            }
+            if ($operator == "minus") {
+                $dislike = $year[0][2] - 1;
+                $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
+                update_intermediary($user_id,$video_id,false,false);
+            }
+        }
+        else{
+            var_dump("Kriese");
+            delete_intermediary($user_id,$video_id);
+        }
         return false;
     }
 
