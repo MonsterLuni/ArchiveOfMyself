@@ -54,6 +54,13 @@ function video_review($video_id,$operator,$user_id): bool{
         return true;
     }
     else{
+        if ($operator == "plus") {
+            update_intermediary($user_id,$video_id,true,$result[0][3]);
+        }
+        if ($operator == "minus") {
+            update_intermediary($user_id,$video_id,$result[0][2],true);
+        }
+        $result = get_intermediary($user_id,$video_id);
         // 2 == LIKE ; 3 == DISLIKE
         if($result[0][2] && $result[0][3]){
             var_dump("beide");
@@ -61,13 +68,13 @@ function video_review($video_id,$operator,$user_id): bool{
                 $like = $year[0][1] + 1;
                 $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
                 $like = $year[0][2] - 1;
-                $conn->query("UPDATE videos SET `dislike`='$like' WHERE id LIKE $video_id");
+                $conn->query("UPDATE videos SET `dislikes`='$like' WHERE id LIKE $video_id");
                 update_intermediary($user_id,$video_id,true,false);
             } elseif ($operator == "minus") {
                 $like = $year[0][1] - 1;
                 $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
                 $like = $year[0][2] + 1;
-                $conn->query("UPDATE videos SET `dislike`='$like' WHERE id LIKE $video_id");
+                $conn->query("UPDATE videos SET `dislikes`='$like' WHERE id LIKE $video_id");
                 update_intermediary($user_id,$video_id,false,true);
             }
         }
@@ -76,13 +83,13 @@ function video_review($video_id,$operator,$user_id): bool{
             if ($operator == "plus") {
                 $like = $year[0][1] - 1;
                 $conn->query("UPDATE videos SET `likes`='$like' WHERE id LIKE $video_id");
-                update_intermediary($user_id,$video_id,false,false);
+                delete_intermediary($user_id,$video_id);
             }
             if ($operator == "minus") {
                 $dislike = $year[0][2] - 1;
                 $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
-                update_intermediary($user_id,$video_id,false,false);
             }
+            delete_intermediary($user_id,$video_id);
         }
         else{
             var_dump("Kriese");

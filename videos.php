@@ -92,7 +92,7 @@ require 'repository/Video_Repository.php';
             const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
-                    alert(this.responseText);
+                    //alert(this.responseText);
                     let inverted_operator;
                     if(operator === "plus"){
                         inverted_operator = "minus"
@@ -118,7 +118,6 @@ require 'repository/Video_Repository.php';
                     else{
                         if(other_button.style.backgroundColor === "darkred"){
                             let other_amount = parseInt(str_otherButton) - 1;
-                            console.log(name_otherButton)
                             other_button.innerText = name_otherButton + " " + other_amount;
                         }
                         my_button.style.backgroundColor = "darkred";
