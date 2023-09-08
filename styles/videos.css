@@ -39,6 +39,8 @@ video{
     background-color: #201919;
 }
 .review{
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 700px;
     height: 50px;
     display: flex;

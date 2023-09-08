@@ -85,7 +85,6 @@ require 'repository/Video_Repository.php';
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
-
         function send_ajax(id,operator) {
             let data = new FormData();
             data.append('id',id);
@@ -94,12 +93,39 @@ require 'repository/Video_Repository.php';
             request.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     ////alert(this.responseText);
-                    //TODO: Add function to increment or decrement like & dislike. Not in Database, just in UI
-                    // INCREMENT
+                    let inverted_operator;
+                    if(operator === "plus"){
+                        inverted_operator = "minus"
+                    }
+                    else{
+                        inverted_operator = "plus"
+                    }
                     let my_button = document.getElementById(id + operator);
-                    my_button.style.backgroundColor = "blue";
-                    // So that location.reload() isn't needed anymore.
-                    location.reload();
+                    let other_button = document.getElementById(id + inverted_operator);
+                    //
+                    let str_myButton = my_button.innerText;
+                    let name_myButton =  str_myButton.split(' ').shift();
+                    str_myButton = str_myButton.substring(str_myButton.indexOf(":") + 1);
+                    //
+                    let str_otherButton = other_button.innerText;
+                    let name_otherButton = str_otherButton.split(' ').shift();
+                    str_otherButton = str_otherButton.substring(str_otherButton.indexOf(":") + 1);
+                    if(my_button.style.backgroundColor === "darkred"){
+                        my_button.style.backgroundColor = "";
+                        let my_amount = parseInt(str_myButton) - 1;
+                        my_button.innerText = name_myButton + " " + my_amount;
+                    }
+                    else{
+                        if(other_button.style.backgroundColor === "darkred"){
+                            let other_amount = parseInt(str_otherButton) - 1;
+                            console.log(name_otherButton)
+                            other_button.innerText = name_otherButton + " " + other_amount;
+                        }
+                        my_button.style.backgroundColor = "darkred";
+                        other_button.style.backgroundColor = "";
+                        let amount = parseInt(str_myButton) + 1;
+                        my_button.innerText = name_myButton + " " + amount;
+                    }
                 }
             };
             request.open("POST", "ajax_request.php");
