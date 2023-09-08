@@ -4,7 +4,6 @@
  * This file is used for the body on each page.
  */
 require 'repository/Video_Repository.php';
-//require 'repository/user_intermediary_video.php';
 ?>
 <style>
     <?php
@@ -32,15 +31,43 @@ require 'repository/Video_Repository.php';
     }
     $videos = videos_fetch_all();
     foreach ($videos as $video) {
+        //TODO: USER MAKE DIFFERENT
+        $intermediary = get_intermediary(1,$video[5]);
         echo "
         <video width='700' height='1244.44' controls>
             <source src='assets/testvideos/$video[0]' type='video/mp4'>
             Your browser does not support the video tag.
         </video>";
-        echo "<div class='review'>
+        if(isset($intermediary[0])){
+            if($intermediary[0][1]){
+                if($intermediary[0][2] && $intermediary[0][3]){
+                    echo "<div class='review'>
+                       <a onclick='send_ajax($video[5],`plus`)' class='review_button' id='$video[5]plus' style='background-color: darkred'>Likes: $video[1]</a>
+                       <a onclick='send_ajax($video[5],`minus`)' class='review_button' id='$video[5]minus' style='background-color: darkred'>Dislikes: $video[2]</a>
+                       </div>";
+                }
+                else{
+                    if($intermediary[0][2]){
+                        echo "<div class='review'>
+                          <a onclick='send_ajax($video[5],`plus`)' class='review_button' id='$video[5]plus' style='background-color: darkred'>Likes: $video[1]</a>
+                          <a onclick='send_ajax($video[5],`minus`)' class='review_button' id='$video[5]minus'>Dislikes: $video[2]</a>
+                          </div>";
+                    }
+                    elseif($intermediary[0][3]){
+                        echo "<div class='review'>
+                          <a onclick='send_ajax($video[5],`plus`)' class='review_button' id='$video[5]plus'>Likes: $video[1]</a>
+                          <a onclick='send_ajax($video[5],`minus`)' class='review_button' id='$video[5]minus' style='background-color: darkred'>Dislikes: $video[2]</a>
+                          </div>";
+                    }
+                }
+            }
+        }
+        else{
+            echo "<div class='review'>
               <a onclick='send_ajax($video[5],`plus`)' class='review_button' id='$video[5]plus'>Likes: $video[1]</a>
               <a onclick='send_ajax($video[5],`minus`)' class='review_button' id='$video[5]minus'>Dislikes: $video[2]</a>
               </div>";
+        }
         $comments = comments_fetch($video);
         $commentslenght = count($comments);
         echo "<a onclick='togVisibility($video[5])' class='commentsSelectable'>Comments: $commentslenght</a>";
@@ -92,7 +119,7 @@ require 'repository/Video_Repository.php';
             const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
-                    //alert(this.responseText);
+                    alert(this.responseText);
                     let inverted_operator;
                     if(operator === "plus"){
                         inverted_operator = "minus"
