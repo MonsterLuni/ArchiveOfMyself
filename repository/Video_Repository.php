@@ -1,5 +1,6 @@
 <?php
 require "user_intermediary_video.php";
+require 'repository/user_intermediary_comment.php';
 /**
  * @author Luca Moser
  * This file is used for the body on each page.
@@ -35,7 +36,7 @@ function comments_fetch($video): array{
     $query = $conn->query("SELECT * FROM comments WHERE video_fk LIKE $video[5] ORDER BY RAND()");
     return $query->fetch_all();
 }
-function video_review($video_id,$operator,$user_id): bool{
+function video_review($video_id,$operator,$user_id): void{
     global $conn;
     $result = get_intermediary($user_id,$video_id);
     $query = $conn->query("SELECT * FROM videos WHERE id LIKE $video_id");
@@ -50,7 +51,6 @@ function video_review($video_id,$operator,$user_id): bool{
             $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
             add_intermediary($user_id,$video_id,false,true);
         }
-        return true;
     }
     else{
         if ($operator == "plus") {
@@ -61,7 +61,6 @@ function video_review($video_id,$operator,$user_id): bool{
         }
         $result = get_intermediary($user_id,$video_id);
         var_dump($result);
-        // 2 == LIKE ; 3 == DISLIKE
         if($result[0][2] && $result[0][3]){
             var_dump("HIER IST WICHTIG: both");
             if ($operator == "plus") {
@@ -90,28 +89,61 @@ function video_review($video_id,$operator,$user_id): bool{
             }
             delete_intermediary($user_id,$video_id);
         }
-        return false;
     }
-
 }
 // ------------------------------------------------------------------------------
-function comment_review($comment_id,$operator): bool{
+function comment_review($comment_id, $operator, $user_id): void{
     global $conn;
-    $query = $conn->query("SELECT * FROM user_intermediary_video WHERE fk_user_id LIKE 1 AND fk_video_id LIKE $comment_id");
-    var_dump($query->fetch_all());
-    if($comment_id) {
-        $query = $conn->query("SELECT * FROM comments WHERE id LIKE 1");
-        $comment = $query->fetch_all();
-        if ($operator) {
-            $like = $comment[0][1] + 1;
+    $result = comment_get_intermediary($user_id,$comment_id);
+    $query = $conn->query("SELECT * FROM comments WHERE id LIKE $comment_id");
+    $year = $query->fetch_all();
+    if(empty($result)) {
+        if ($operator == "plus") {
+            $like = $year[0][1] + 1;
             $conn->query("UPDATE comments SET `likes`='$like' WHERE id LIKE $comment_id");
-        } else {
-            $dislike = $comment[0][2] + 1;
+            comment_add_intermediary($user_id,$comment_id,true,false);
+        } elseif ($operator == "minus") {
+            $dislike = $year[0][2] + 1;
             $conn->query("UPDATE comments SET `dislikes`='$dislike' WHERE id LIKE $comment_id");
+            comment_add_intermediary($user_id,$comment_id,false,true);
         }
-        return true;
     }
     else{
-        return false;
+        if ($operator == "plus") {
+            comment_update_intermediary($comment_id,$user_id,true,$result[0][3]);
+        }
+        if ($operator == "minus") {
+            comment_update_intermediary($comment_id,$user_id,$result[0][2],true);
+        }
+        $result = comment_get_intermediary($user_id,$comment_id);
+        var_dump($result);
+        if($result[0][2] && $result[0][3]){
+            var_dump("HIER IST WICHTIG: both");
+            if ($operator == "plus") {
+                $like = $year[0][1] + 1;
+                $conn->query("UPDATE comments SET `likes`='$like' WHERE id LIKE $comment_id");
+                $like = $year[0][2] - 1;
+                $conn->query("UPDATE comments SET `dislikes`='$like' WHERE id LIKE $comment_id");
+                comment_update_intermediary($comment_id,$user_id,true,false);
+            } elseif ($operator == "minus") {
+                $like = $year[0][1] - 1;
+                $conn->query("UPDATE comments SET `likes`='$like' WHERE id LIKE $comment_id");
+                $like = $year[0][2] + 1;
+                $conn->query("UPDATE comments SET `dislikes`='$like' WHERE id LIKE $comment_id");
+                comment_update_intermediary($comment_id,$user_id,false,true);
+            }
+        }
+        elseif($result[0][2] || $result[0][3]){
+            var_dump("HIER IST WICHTIG: some");
+            if ($operator == "plus") {
+                $like = $year[0][1] - 1;
+                $conn->query("UPDATE comments SET `likes`='$like' WHERE id LIKE $comment_id");
+            }
+            if ($operator == "minus") {
+                $dislike = $year[0][2] - 1;
+                $conn->query("UPDATE comments SET `dislikes`='$dislike' WHERE id LIKE $comment_id");
+            }
+            comment_delete_intermediary($user_id,$comment_id);
+        }
     }
 }

@@ -32,6 +32,15 @@ video{
     background-color: #462929;
     border-radius: 10px;
 }
+.review_button_comment{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 20%;
+    background-color: #462929;
+    border-radius: 10px;
+}
 .review_button:hover{
     background-color: #352222;
 }

@@ -17,5 +17,5 @@
 
 <?php
 echo "<h1>Ueber-Uns</h1>";
-add_user("Testigal","Beschreibung","bild.png")
+add_user("Testigal","Beschreibung","bild.png","test123")
 ?>
