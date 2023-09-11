@@ -57,7 +57,7 @@ require 'repository/Video_Repository.php';
         echo "<a onclick='togVisibility($video[5])' class='commentsSelectable'>Comments: $commentslenght</a>";
         if(!empty($comments)){
             foreach ($comments as $comment){
-                $intermediary = comment_get_intermediary(1,$comment[4]);
+                $intermediary = comment_get_intermediary($_SESSION['loggedInUser'][3],$comment[4]);
                 echo "<div class='comment$video[5] commentbox' style='display: none'>";
                 echo "<p style='font-size: 30px; max-width: 700px'>$comment[0]</p>";
                 if(isset($intermediary[0])){
