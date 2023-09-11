@@ -5,4 +5,6 @@ RewriteRule ^ueber-uns ueber-uns.php [NC,L]
 RewriteRule ^profile profile.php [NC,L]
 RewriteRule ^data data.php [NC,L]
 RewriteRule ^404 404.php [NC,L]
+RewriteRule ^login login.php [NC,L]
+RewriteRule ^register register.php [NC,L]
 ErrorDocument 404 /ArchiveOfMyself/404

@@ -18,6 +18,10 @@
 </head>
 <body>
 <?php
+if(!isset($_SESSION['loggedInUser'])){
+    header("Location: http://localhost/ArchiveOfMyself/profile");
+    die;
+}
 include "videos.php";
 ?>
 </body>

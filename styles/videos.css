@@ -47,6 +47,12 @@ video{
 .review_button:active{
     background-color: #201919;
 }
+.review_button_comment:hover{
+    background-color: #352222;
+}
+.review_button_comment:active{
+    background-color: #201919;
+}
 .review{
     margin-top: 10px;
     margin-bottom: 10px;

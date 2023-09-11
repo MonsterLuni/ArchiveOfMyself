@@ -3,3 +3,31 @@
     flex-direction: column;
     align-items: center;
 }
+h1{
+    color: white;
+}
+.review_button_comment{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 20%;
+    background-color: #462929;
+    border-radius: 10px;
+}
+.review_button_comment:hover{
+    background-color: #352222;
+}
+.review_button_comment:active{
+    background-color: #201919;
+}
+.review{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 700px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}

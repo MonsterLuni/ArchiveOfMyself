@@ -7,9 +7,6 @@
 
     <header>
         <?php
-
-
-
         include "Include/header.php";
         require 'repository/User_Repository.php';
         ?>
@@ -17,5 +14,7 @@
 
 <?php
 echo "<h1>Ueber-Uns</h1>";
-add_user("Testigal","Beschreibung","bild.png","test123")
+add_user("Testigal","Beschreibung","bild.png","Luni476905");
+session_start();
+unset($_SESSION['loggedInUser']);
 ?>

@@ -26,21 +26,21 @@ require 'repository/Video_Repository.php';
             if($intermediary[0][1]){
                 if($intermediary[0][2] && $intermediary[0][3]){
                     echo "<div class='review'>
-                       <a onclick='send_ajax($video[5],`plus`,`video`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
-                       <a onclick='send_ajax($video[5],`minus`,`video`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
+                       <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
+                       <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
                        </div>";
                 }
                 else{
                     if($intermediary[0][2]){
                         echo "<div class='review'>
-                          <a onclick='send_ajax($video[5],`plus`,`video`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
-                          <a onclick='send_ajax($video[5],`minus`,`video`)' class='review_button' id='$video[5]minusvideo'>Dislikes: $video[2]</a>
+                          <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
+                          <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo'>Dislikes: $video[2]</a>
                           </div>";
                     }
                     elseif($intermediary[0][3]){
                         echo "<div class='review'>
-                          <a onclick='send_ajax($video[5],`plus`,`video`)' class='review_button' id='$video[5]plusvideo'>Likes: $video[1]</a>
-                          <a onclick='send_ajax($video[5],`minus`,`video`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
+                          <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo'>Likes: $video[1]</a>
+                          <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
                           </div>";
                     }
                 }
@@ -48,8 +48,8 @@ require 'repository/Video_Repository.php';
         }
         else{
             echo "<div class='review'>
-              <a onclick='send_ajax($video[5],`plus`,`video`)' class='review_button' id='$video[5]plusvideo'>Likes: $video[1]</a>
-              <a onclick='send_ajax($video[5],`minus`,`video`)' class='review_button' id='$video[5]minusvideo'>Dislikes: $video[2]</a>
+              <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo'>Likes: $video[1]</a>
+              <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo'>Dislikes: $video[2]</a>
               </div>";
         }
         $comments = comments_fetch($video);
@@ -64,21 +64,21 @@ require 'repository/Video_Repository.php';
                     if($intermediary[0][1]){
                         if($intermediary[0][2] && $intermediary[0][3]){
                             echo "<div class='review'>
-                       <a onclick='send_ajax($comment[4],`plus`,`comment`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
-                       <a onclick='send_ajax($comment[4],`minus`,`comment`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
+                       <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
+                       <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
                        </div>";
                         }
                         else{
                             if($intermediary[0][2]){
                                 echo "<div class='review'>
-                          <a onclick='send_ajax($comment[4],`plus`,`comment`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
-                          <a onclick='send_ajax($comment[4],`minus`,`comment`)' class='review_button_comment' id='$comment[4]minuscomment'>Dislikes: $comment[2]</a>
+                          <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
+                          <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment'>Dislikes: $comment[2]</a>
                           </div>";
                             }
                             elseif($intermediary[0][3]){
                                 echo "<div class='review'>
-                          <a onclick='send_ajax($comment[4],`plus`,`comment`)' class='review_button_comment' id='$comment[4]pluscomment'>Likes: $comment[1]</a>
-                          <a onclick='send_ajax($comment[4],`minus`,`comment`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
+                          <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment'>Likes: $comment[1]</a>
+                          <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
                           </div>";
                             }
                         }
@@ -87,8 +87,8 @@ require 'repository/Video_Repository.php';
                 }
                 else{
                     echo "<div class='review'>
-                    <a onclick='send_ajax($comment[4],`plus`,`comment`)' class='review_button_comment' id='$comment[4]pluscomment'>Likes: $comment[1]</a>
-                    <a onclick='send_ajax($comment[4],`minus`,`comment`)' class='review_button_comment' id='$comment[4]minuscomment'>Dislikes: $comment[2]</a>
+                    <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment'>Likes: $comment[1]</a>
+                    <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment'>Dislikes: $comment[2]</a>
                     </div>";
                 }
                 echo "</div>";
@@ -119,11 +119,12 @@ require 'repository/Video_Repository.php';
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
-        function send_ajax(id,operator,type) {
+        function send_ajax(id,operator,type, site) {
             let data = new FormData();
             data.append('id',id);
             data.append('operator',operator);
             data.append('type',type);
+            data.append('site',site)
             const request = new XMLHttpRequest();
             request.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
