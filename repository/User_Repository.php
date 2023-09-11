@@ -8,6 +8,15 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+if(isset($_POST['description'])){
+    session_start();
+    add_user($_POST['username'],$_POST['description'],"bild.png",$_POST['password']);
+    $user = get_user_from_username($_POST['username']);
+    $_SESSION["loggedInUser"] = $user[0];
+    header("Location: http://localhost/ArchiveOfMyself/profile");
+    die;
+}
 function verify($username,$pword): string{
     $user = get_user_from_username($username);
     if(!empty($user[0])){

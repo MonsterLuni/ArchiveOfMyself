@@ -1,16 +1,16 @@
 <?php
 require 'repository\Video_Repository.php';
+session_start();
 $site = $_POST['site'];
-//TODO: Einfügen, dass User_id vom user kommt.
 if($site == "videos"){
     $id = $_POST['id'];
     $operator = $_POST['operator'];
     $type = $_POST['type'];
     if($type == "video"){
-        video_review($id,$operator,1);
+        video_review($id,$operator,$_SESSION['loggedInUser'][3]);
     }
     elseif($type == "comment"){
-        comment_review($id,$operator,1);
+        comment_review($id,$operator,$_SESSION['loggedInUser'][3]);
     }
 }
 elseif($site == "profile"){

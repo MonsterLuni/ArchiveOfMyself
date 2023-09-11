@@ -30,13 +30,13 @@ if(isset($_SESSION['loggedInUser'])){
 ?>
 <div id="body">
     <div id="form">
-        <form action="profile.php" method="post">
+        <form action="repository/User_Repository.php" method="post">
             <label for="username">Username</label><br>
             <input type="text" id="username" placeholder="BigUsername" name="username" required><br>
             <label for="password">Password</label><br>
             <input type="password" id="password" placeholder="test123" name="password" required><br>
-            <label for="description">Password</label><br>
-            <input type="password" id="description" placeholder="dies ist eine wundervolle beschreibung" name="description" required><br>
+            <label for="description">Description</label><br>
+            <input type="text" id="description" placeholder="dies ist eine beschreibung" name="description" required><br>
             <br>
             <input type="submit" >
         </form>

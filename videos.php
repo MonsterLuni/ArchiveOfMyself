@@ -15,7 +15,7 @@ require 'repository/Video_Repository.php';
     $videos = videos_fetch_all();
     foreach ($videos as $video) {
         //TODO: USER MAKE DIFFERENT
-        $intermediary = get_intermediary(1,$video[5]);
+        $intermediary = get_intermediary($_SESSION['loggedInUser'][3],$video[5]);
         echo "
         <video width='700' height='1244.44' controls>
             <source src='assets/testvideos/$video[0]' type='video/mp4'>
