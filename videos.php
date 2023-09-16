@@ -12,9 +12,9 @@ require 'repository/Video_Repository.php';
 </style>
 <div id="body">
     <?php
+    $likedColor = "darkgreen";
     $videos = videos_fetch_all();
     foreach ($videos as $video) {
-        //TODO: USER MAKE DIFFERENT
         $intermediary = get_intermediary($_SESSION['loggedInUser'][3],$video[5]);
         echo "
         <video width='700' height='1244.44' controls>
@@ -26,21 +26,21 @@ require 'repository/Video_Repository.php';
             if($intermediary[0][1]){
                 if($intermediary[0][2] && $intermediary[0][3]){
                     echo "<div class='review'>
-                       <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
-                       <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
+                       <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: $likedColor'>Likes: $video[1]</a>
+                       <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: $likedColor'>Dislikes: $video[2]</a>
                        </div>";
                 }
                 else{
                     if($intermediary[0][2]){
                         echo "<div class='review'>
-                          <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: darkred'>Likes: $video[1]</a>
+                          <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo' style='background-color: $likedColor'>Likes: $video[1]</a>
                           <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo'>Dislikes: $video[2]</a>
                           </div>";
                     }
                     elseif($intermediary[0][3]){
                         echo "<div class='review'>
                           <a onclick='send_ajax($video[5],`plus`,`video`,`videos`)' class='review_button' id='$video[5]plusvideo'>Likes: $video[1]</a>
-                          <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: darkred'>Dislikes: $video[2]</a>
+                          <a onclick='send_ajax($video[5],`minus`,`video`,`videos`)' class='review_button' id='$video[5]minusvideo' style='background-color: $likedColor'>Dislikes: $video[2]</a>
                           </div>";
                     }
                 }
@@ -64,21 +64,21 @@ require 'repository/Video_Repository.php';
                     if($intermediary[0][1]){
                         if($intermediary[0][2] && $intermediary[0][3]){
                             echo "<div class='review'>
-                       <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
-                       <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
+                       <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: $likedColor'>Likes: $comment[1]</a>
+                       <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: $likedColor'>Dislikes: $comment[2]</a>
                        </div>";
                         }
                         else{
                             if($intermediary[0][2]){
                                 echo "<div class='review'>
-                          <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: darkred'>Likes: $comment[1]</a>
+                          <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment' style='background-color: $likedColor'>Likes: $comment[1]</a>
                           <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment'>Dislikes: $comment[2]</a>
                           </div>";
                             }
                             elseif($intermediary[0][3]){
                                 echo "<div class='review'>
                           <a onclick='send_ajax($comment[4],`plus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]pluscomment'>Likes: $comment[1]</a>
-                          <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: darkred'>Dislikes: $comment[2]</a>
+                          <a onclick='send_ajax($comment[4],`minus`,`comment`,`videos`)' class='review_button_comment' id='$comment[4]minuscomment' style='background-color: $likedColor'>Dislikes: $comment[2]</a>
                           </div>";
                             }
                         }
@@ -146,17 +146,17 @@ require 'repository/Video_Repository.php';
                     let str_otherButton = other_button.innerText;
                     let name_otherButton = str_otherButton.split(' ').shift();
                     str_otherButton = str_otherButton.substring(str_otherButton.indexOf(":") + 1);
-                    if(my_button.style.backgroundColor === "darkred"){
+                    if(my_button.style.backgroundColor === "darkgreen"){
                         my_button.style.backgroundColor = "";
                         let my_amount = parseInt(str_myButton) - 1;
                         my_button.innerText = name_myButton + " " + my_amount;
                     }
                     else{
-                        if(other_button.style.backgroundColor === "darkred"){
+                        if(other_button.style.backgroundColor === "darkgreen"){
                             let other_amount = parseInt(str_otherButton) - 1;
                             other_button.innerText = name_otherButton + " " + other_amount;
                         }
-                        my_button.style.backgroundColor = "darkred";
+                        my_button.style.backgroundColor = "darkgreen";
                         other_button.style.backgroundColor = "";
                         let amount = parseInt(str_myButton) + 1;
                         my_button.innerText = name_myButton + " " + amount;

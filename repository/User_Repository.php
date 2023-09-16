@@ -14,6 +14,8 @@ if(isset($_POST['description'])){
     add_user($_POST['username'],$_POST['description'],"bild.png",$_POST['password']);
     $user = get_user_from_username($_POST['username']);
     $_SESSION["loggedInUser"] = $user[0];
+    $id = $_SESSION['loggedInUser'][3];
+    $info = move_uploaded_file($_FILES['avatar']["tmp_name"],"C:/xampp/htdocs/ArchiveOfMyself/assets/profilepictures/" . $id . ".png");
     header("Location: http://localhost/ArchiveOfMyself/profile");
     die;
 }

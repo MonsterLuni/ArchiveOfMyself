@@ -46,8 +46,10 @@ if(isset($_POST['username']) && isset($_POST['password'])){
     }
 }
 if(isset($_SESSION["loggedInUser"])){
-    echo "<h1>{$_SESSION['loggedInUser'][0]}</h1>
+    echo "<img src='assets/profilepictures/{$_SESSION['loggedInUser'][3]}.png' alt='profilepicture'>
+          <h1>{$_SESSION['loggedInUser'][0]}</h1>
           <h2>{$_SESSION['loggedInUser'][1]}</h2>";
+
 }
 else{
     echo "<h1>Du musst eingeloggt sein um Videos sehen zu können!</h1>";

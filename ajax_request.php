@@ -1,6 +1,7 @@
 <?php
 require 'repository\Video_Repository.php';
 session_start();
+var_dump("ICH WAR HIER");
 $site = $_POST['site'];
 if($site == "videos"){
     $id = $_POST['id'];

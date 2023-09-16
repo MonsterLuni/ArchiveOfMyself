@@ -13,7 +13,8 @@
 <head>
     <title></title>
 <?php
-    echo "<h1>Home</h1>";
+    echo "<br>";
+    echo "<br>";
 ?>
 </head>
 <body>
