@@ -37,3 +37,12 @@ img{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+#menu{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #242424;
+}

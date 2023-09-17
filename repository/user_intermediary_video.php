@@ -8,7 +8,11 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+function get_intermediarys($user_id): array{
+    global $conn;
+    $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_user_id` LIKE $user_id");
+    return $query->fetch_all();
+}
 function get_intermediary($user_id, $video_id): array{
     global $conn;
     $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_video_id` LIKE $video_id AND `fk_user_id` LIKE $user_id");

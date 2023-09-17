@@ -16,6 +16,7 @@
 
     include "Include/header.php";
     require 'repository/User_Repository.php';
+    require "repository/Video_Repository.php"
     ?>
 </header>
 <div id="body">
@@ -49,7 +50,32 @@ if(isset($_SESSION["loggedInUser"])){
     echo "<img src='assets/profilepictures/{$_SESSION['loggedInUser'][3]}.png' alt='profilepicture'>
           <h1>{$_SESSION['loggedInUser'][0]}</h1>
           <h2>{$_SESSION['loggedInUser'][1]}</h2>";
+    echo "<div id='menu'>";
+        // Name, Url, Image
+        $tabs = [["Uploaded Videos",""],["Saved Videos",""],["Liked Videos",""]];
 
+        $url =  "{$_SERVER['REQUEST_URI']}";
+        $specific_tab = substr($url, strpos($url, "/") + 17);
+        echo "<title>$specific_tab</title>";
+        foreach ($tabs as $tab) {
+            if($tab[1] == $specific_tab){
+                echo "<a class='tab' id='selected'>$tab[0]</a>";
+            }
+            else{
+                echo "<a class='tab'>$tab[0]</a>";
+            }
+        }
+    echo "</div>";
+    echo "<div>";
+        foreach(videos_fetch_liked($_SESSION['loggedInUser'][3]) as $video){
+            echo "
+            <video width='112.50' height='200' controls>
+            <source src='assets/testvideos/$video[0]' type='video/mp4'>
+            Your browser does not support the video tag.
+            Your browser does not support the video tag.
+            </video>";
+        }
+    echo "</div>";
 }
 else{
     echo "<h1>Du musst eingeloggt sein um Videos sehen zu können!</h1>";

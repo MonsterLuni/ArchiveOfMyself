@@ -22,15 +22,21 @@ function videos_fetch_all(): array{
     return $query->fetch_all();
 }
 //TODO: MAKE / USE
-/*
-function videos_fetch_filter(){
+
+function videos_fetch_liked($user_id): array{
+    $memory = [];
+    $intermediary = get_intermediarys($user_id);
+    foreach ($intermediary as $video){
+        array_push($memory,video_fetch($video[1])[0]);
+    }
+    return $memory;
 }
 function video_fetch($id): array{
     global $conn;
     $query = $conn->query("SELECT * FROM videos WHERE id LIKE $id ORDER BY RAND()");
     return $query->fetch_all();
 }
-*/
+
 function comments_fetch($video): array{
     global $conn;
     $query = $conn->query("SELECT * FROM comments WHERE video_fk LIKE $video[5] ORDER BY RAND()");
