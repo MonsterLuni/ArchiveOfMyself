@@ -46,3 +46,12 @@ img{
     border-radius: 10px;
     background-color: #242424;
 }
+.videos{
+    margin-top: 10px;
+}
+video{
+    box-shadow: 5px 5px 10px #2d1c1c;
+    border-radius: 20px;
+    background-color: #1e1e1e;
+    margin: 5px;
+}

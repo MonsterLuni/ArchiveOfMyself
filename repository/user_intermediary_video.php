@@ -8,9 +8,14 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-function get_intermediarys($user_id): array{
+function get_intermediarys_liked_or_disliked($user_id,$likeordislike): array{
     global $conn;
-    $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_user_id` LIKE $user_id");
+    if($likeordislike){
+        $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_user_id` LIKE $user_id AND `bool_like` LIKE 1");
+    }
+    else{
+        $query = $conn->query("SELECT * FROM `user_intermediary_video` WHERE `fk_user_id` LIKE $user_id AND `bool_dislike` LIKE 1");
+    }
     return $query->fetch_all();
 }
 function get_intermediary($user_id, $video_id): array{

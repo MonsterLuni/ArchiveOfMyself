@@ -59,31 +59,44 @@ if(isset($_SESSION["loggedInUser"])){
         echo "<title>$specific_tab</title>";
         foreach ($tabs as $tab) {
             if($tab[1] == $specific_tab){
-                echo "<a class='tab' id='selected'>$tab[0]</a>";
+                echo "<a class='tab' id='selected' onclick='send_videos($tab[0])'>$tab[0]</a>";
             }
             else{
-                echo "<a class='tab'>$tab[0]</a>";
+                echo "<a class='tab' onclick='send_videos($tab[0])'>$tab[0]</a>";
             }
         }
+
     echo "</div>";
-    echo "<div>";
+    echo "<div class='videos'>";
+    if(isset($_POST['liked'])){
         foreach(videos_fetch_liked($_SESSION['loggedInUser'][3]) as $video){
+                echo "
+                <video width='112.50' height='200' controls>
+                <source src='assets/testvideos/$video[0]' type='video/mp4'>
+                Your browser does not support the video tag.
+                Your browser does not support the video tag.
+                </video>";
+            }
+    }
+    else{
+        foreach(videos_fetch_disliked($_SESSION['loggedInUser'][3]) as $video){
             echo "
-            <video width='112.50' height='200' controls>
-            <source src='assets/testvideos/$video[0]' type='video/mp4'>
-            Your browser does not support the video tag.
-            Your browser does not support the video tag.
-            </video>";
+                <video width='112.50' height='200' controls>
+                <source src='assets/testvideos/$video[0]' type='video/mp4'>
+                Your browser does not support the video tag.
+                Your browser does not support the video tag.
+                </video>";
         }
+    }
     echo "</div>";
 }
-else{
-    echo "<h1>Du musst eingeloggt sein um Videos sehen zu können!</h1>";
-    echo "<div class='review'>
-      <a onclick='pagegowoosh(`login`)' class='review_button_comment'>Login</a>
-      <a onclick='pagegowoosh(`register`)' class='review_button_comment'>Register</a>
-      </div>";
-}
+        else{
+            echo "<h1>Du musst eingeloggt sein um Videos sehen zu können!</h1>";
+            echo "<div class='review'>
+              <a onclick='pagegowoosh(`login`)' class='review_button_comment'>Login</a>
+              <a onclick='pagegowoosh(`register`)' class='review_button_comment'>Register</a>
+              </div>";
+        }
 ?>
 </div>
 <script>
@@ -98,6 +111,18 @@ else{
             }
         }
         request.open("POST", "ajax_request.php");
+        request.send(data);
+    }
+    function send_videos(type) {
+        let data = new FormData();
+        data.append('type',type)
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                //alert(this.responseText);
+            }
+        }
+        request.open("POST", "profile.php");
         request.send(data);
     }
     function pagegowoosh(type){

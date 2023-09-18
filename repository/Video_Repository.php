@@ -25,7 +25,15 @@ function videos_fetch_all(): array{
 
 function videos_fetch_liked($user_id): array{
     $memory = [];
-    $intermediary = get_intermediarys($user_id);
+    $intermediary = get_intermediarys_liked_or_disliked($user_id, true);
+    foreach ($intermediary as $video){
+        array_push($memory,video_fetch($video[1])[0]);
+    }
+    return $memory;
+}
+function videos_fetch_disliked($user_id): array{
+    $memory = [];
+    $intermediary = get_intermediarys_liked_or_disliked($user_id, false);
     foreach ($intermediary as $video){
         array_push($memory,video_fetch($video[1])[0]);
     }
