@@ -61,6 +61,7 @@ if(isset($_SESSION["loggedInUser"])){
     echo "<img src='assets/profilepictures/{$_SESSION['loggedInUser'][3]}.png' alt='profilepicture' style='height: 100px; width: auto'>
           <h1>{$_SESSION['loggedInUser'][0]}</h1>
           <h2>{$_SESSION['loggedInUser'][1]}</h2>";
+    echo "<p class='tab upload' onclick='upload_video()'>UPLOAD VIDEO</p>";
     echo "<div id='menu'>";
         // Name, Url, Image
         $tabs = [["Uploaded","Uploaded"],["Saved","Saved"],["Liked","Liked"],["Disliked","Disliked"]];
@@ -160,7 +161,10 @@ if(isset($_SESSION["loggedInUser"])){
         request.send(data);
     }
     function send_videos(type) {
-        location.replace("http://localhost/ArchiveOfMyself/profile?type=" + type)
+        location.replace("http://localhost/ArchiveOfMyself/profile?type=" + type);
+    }
+    function upload_video(){
+        location.replace("http://localhost/ArchiveOfMyself/upload");
     }
     function pagegowoosh(type){
         if(type === "login"){
