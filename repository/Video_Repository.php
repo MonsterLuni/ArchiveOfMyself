@@ -23,6 +23,12 @@ function videos_fetch_all(): array{
 }
 //TODO: MAKE / USE
 
+function videos_get_uploaded($user_id){
+    global $conn;
+    $query = $conn->query("SELECT * FROM videos WHERE `fk_uploaded_from_id` LIKE $user_id");
+    return $query->fetch_all();
+}
+
 function videos_fetch_liked($user_id): array{
     $memory = [];
     $intermediary = get_intermediarys_liked_or_disliked($user_id, true);
@@ -101,7 +107,9 @@ function video_review($video_id,$operator,$user_id): void{
                 $dislike = $year[0][2] - 1;
                 $conn->query("UPDATE videos SET `dislikes`='$dislike' WHERE id LIKE $video_id");
             }
-            delete_intermediary($user_id,$video_id);
+            if(!$result[0][4]){
+                delete_intermediary($user_id,$video_id);
+            }
         }
     }
 }

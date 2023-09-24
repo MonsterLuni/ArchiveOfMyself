@@ -4,18 +4,20 @@
  * This file is used for the header on each page.
  */
 ?>
-
+<!DOCTYPE html>
+<html lang="en">
 <header>
     <?php
     include "Include/header.php";
     ?>
 </header>
 <head>
-    <title></title>
-<?php
+    <title>Home</title>
+    <meta name="viewport" content="width=">
+    <?php
     echo "<br>";
     echo "<br>";
-?>
+    ?>
 </head>
 <body>
 <?php
@@ -27,3 +29,5 @@ if(!isset($_SESSION['loggedInUser'])){
 include "videos.php";
 ?>
 </body>
+</html>
+

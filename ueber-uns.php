@@ -10,6 +10,7 @@
         include "Include/header.php";
         require 'repository/User_Repository.php';
         ?>
+        <title>Über-Uns</title>
     </header>
 
 <?php
