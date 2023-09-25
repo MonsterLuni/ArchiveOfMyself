@@ -1,6 +1,6 @@
 <?php
 require "user_intermediary_video.php";
-require 'repository/user_intermediary_comment.php';
+require 'user_intermediary_comment.php';
 /**
  * @author Luca Moser
  * This file is used for the body on each page.
@@ -8,14 +8,30 @@ require 'repository/user_intermediary_comment.php';
 
 require "./db/connection.php";
 
+if(isset($_POST['title'])){
+    session_start();
+    $id = $_SESSION['loggedInUser'][3];
+    $name = $_POST['title'];
+    if(empty(video_fetch_by_title($name))){
+        echo "<script>alert('Title already Exists, try again')
+                      location.replace('http://localhost/ArchiveOfMyself/upload')
+              </script>";
+        die;
+    }
+    upload_video($_POST['title'] . $id . ".mp4",$_POST['title'],$_POST['description']);
+    move_uploaded_file($_FILES['video']["tmp_name"],"C:/xampp/htdocs/ArchiveOfMyself/assets/testvideos/$name" . $id . ".mp4");
+    header("Location: http://localhost/ArchiveOfMyself/profile");
+    die;
+}
+
 function videos_fetch_all(): array{
     global $conn;
     //ORDER BY RAND() for random, if not needed, delete
-    $query = $conn->query("SELECT * FROM videos");
+    $query = $conn->query("SELECT * FROM videos ORDER BY RAND()");
     return $query->fetch_all();
 }
 
-function videos_get_uploaded($user_id){
+function videos_get_uploaded($user_id): array{
     global $conn;
     $query = $conn->query("SELECT * FROM videos WHERE `fk_uploaded_from_id` LIKE $user_id");
     return $query->fetch_all();
@@ -39,7 +55,12 @@ function videos_fetch_disliked($user_id): array{
 }
 function video_fetch($id): array{
     global $conn;
-    $query = $conn->query("SELECT * FROM videos WHERE id LIKE $id ORDER BY RAND()");
+    $query = $conn->query("SELECT * FROM videos WHERE id LIKE $id");
+    return $query->fetch_all();
+}
+function video_fetch_by_title($title): array{
+    global $conn;
+    $query = $conn->query("SELECT * FROM videos WHERE 'text' LIKE '$title'");
     return $query->fetch_all();
 }
 
@@ -104,6 +125,12 @@ function video_review($video_id,$operator,$user_id): void{
             }
         }
     }
+}
+
+function upload_video($url, $title, $description): bool{
+    global $conn;
+    $conn->query("INSERT INTO `videos`(`url`, `text`, `description`, `fk_uploaded_from_id`) VALUES ('$url','$title','$description','{$_SESSION['loggedInUser'][3]}')");
+    return true;
 }
 // ------------------------------------------------------------------------------
 function comment_review($comment_id, $operator, $user_id): void{

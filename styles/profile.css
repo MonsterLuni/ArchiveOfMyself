@@ -58,3 +58,12 @@ video{
 h2{
     color: gray;
 }
+.upload{
+    padding: 10px;
+    margin: 10px;
+    background-color: #242424;
+    border-radius: 10px;
+}
+.tab:hover{
+    cursor: pointer;
+}
