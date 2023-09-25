@@ -1,14 +1,5 @@
 <?php
-// 5 == comments, 6 == videos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "ArchiveOfMyself";
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+require "./db/connection.php";
 function comment_get_intermediary($user_id, $comment_id): array{
     global $conn;
     $query = $conn->query("SELECT * FROM `user_intermediary_comment` WHERE `fk_comment_id` LIKE $comment_id AND `fk_user_id` LIKE $user_id");
@@ -29,5 +20,3 @@ function comment_delete_intermediary($user_id, $comment_id): bool{
     $conn->query("DELETE FROM `user_intermediary_comment` WHERE `fk_comment_id` LIKE $comment_id AND `fk_user_id` LIKE $user_id");
     return true;
 }
-
-//function get_intermediary(){}

@@ -1,13 +1,5 @@
 <?php
-// 5 == comments, 6 == videos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "ArchiveOfMyself";
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require "./db/connection.php";
 function get_intermediarys_liked_or_disliked($user_id,$likeordislike): array{
     global $conn;
     if($likeordislike){

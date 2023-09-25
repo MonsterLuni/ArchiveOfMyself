@@ -6,14 +6,7 @@ require 'repository/user_intermediary_comment.php';
  * This file is used for the body on each page.
  */
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "ArchiveOfMyself";
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
-}
+require "./db/connection.php";
 
 function videos_fetch_all(): array{
     global $conn;
@@ -21,7 +14,6 @@ function videos_fetch_all(): array{
     $query = $conn->query("SELECT * FROM videos");
     return $query->fetch_all();
 }
-//TODO: MAKE / USE
 
 function videos_get_uploaded($user_id){
     global $conn;
