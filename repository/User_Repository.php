@@ -1,5 +1,5 @@
 <?php
-require "./db/connection.php";
+require "connection.php";
 
 if(isset($_POST['description'])){
     session_start();
@@ -7,8 +7,8 @@ if(isset($_POST['description'])){
     $user = get_user_from_username($_POST['username']);
     $_SESSION["loggedInUser"] = $user[0];
     $id = $_SESSION['loggedInUser'][3];
-    $info = move_uploaded_file($_FILES['avatar']["tmp_name"],"C:/xampp/htdocs/ArchiveOfMyself/assets/profilepictures/" . $id . ".png");
-    header("Location: http://localhost/ArchiveOfMyself/profile");
+    $info = move_uploaded_file($_FILES['avatar']["tmp_name"],"../assets/profilepictures/" . $id . ".png");
+    echo "<script>location.href='../profile'</script>";
     die;
 }
 function verify($username,$pword): string{

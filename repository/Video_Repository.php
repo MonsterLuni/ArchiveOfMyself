@@ -6,27 +6,28 @@ require 'user_intermediary_comment.php';
  * This file is used for the body on each page.
  */
 
-require "./db/connection.php";
+require "connection.php";
 
 if(isset($_POST['title'])){
     session_start();
     $id = $_SESSION['loggedInUser'][3];
     $name = $_POST['title'];
-    if(empty(video_fetch_by_title($name))){
+    $vids = video_fetch_by_title($name);
+    if(!empty($vids)){
+        var_dump($name);
         echo "<script>alert('Title already Exists, try again')
-                      location.replace('http://localhost/ArchiveOfMyself/upload')
+                      location.href='../upload';
               </script>";
         die;
     }
     upload_video($_POST['title'] . $id . ".mp4",$_POST['title'],$_POST['description']);
-    move_uploaded_file($_FILES['video']["tmp_name"],"C:/xampp/htdocs/ArchiveOfMyself/assets/testvideos/$name" . $id . ".mp4");
-    header("Location: http://localhost/ArchiveOfMyself/profile");
+    move_uploaded_file($_FILES['video']["tmp_name"],"assets/testvideos/$name" . $id . ".mp4");
+    echo "<script>location.href='../profile'</script>";
     die;
 }
 
 function videos_fetch_all(): array{
     global $conn;
-    //ORDER BY RAND() for random, if not needed, delete
     $query = $conn->query("SELECT * FROM videos ORDER BY RAND()");
     return $query->fetch_all();
 }
@@ -60,7 +61,7 @@ function video_fetch($id): array{
 }
 function video_fetch_by_title($title): array{
     global $conn;
-    $query = $conn->query("SELECT * FROM videos WHERE 'text' LIKE '$title'");
+    $query = $conn->query("SELECT * FROM videos WHERE text LIKE '$title'");
     return $query->fetch_all();
 }
 

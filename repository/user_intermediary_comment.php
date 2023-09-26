@@ -1,5 +1,5 @@
 <?php
-require "./db/connection.php";
+require "connection.php";
 function comment_get_intermediary($user_id, $comment_id): array{
     global $conn;
     $query = $conn->query("SELECT * FROM `user_intermediary_comment` WHERE `fk_comment_id` LIKE $comment_id AND `fk_user_id` LIKE $user_id");

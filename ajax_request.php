@@ -18,12 +18,12 @@ elseif($site == "profile"){
     $type = $_POST['type'];
     if($type == "login"){
         var_dump("LOGIN");
-        header("Location: http://localhost/ArchiveOfMyself/login");
+        echo "<script>location.href='./login'</script>";
         exit();
     }
     else{
         var_dump("REGISTER");
-        header("Location: http://localhost/ArchiveOfMyself/register");
+        echo "<script>location.href='./register'</script>";
         exit();
     }
 }

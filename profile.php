@@ -40,17 +40,17 @@ if(isset($_POST['username']) && isset($_POST['password'])){
             $user = get_user_from_username($username);
             $_SESSION["loggedInUser"] = $user[0];
             sleep(1);
-            header("Location: http://localhost/ArchiveOfMyself/profile");
+            echo "<script>location.href='./profile'</script>";
             break;
         }
         case "Password is false": {
             unset($_SESSION['loggedInUser']);
-            header("Location: http://localhost/ArchiveOfMyself/login?error=password");
+            echo "<script>location.href='./login?error=password'</script>";
             break;
         }
         case "Found no User with this Username": {
             unset($_SESSION['loggedInUser']);
-            header("Location: http://localhost/ArchiveOfMyself/login?error=username");
+            echo "<script>location.href='./login?error=username'</script>";
             break;
         }
     }
@@ -161,17 +161,17 @@ if(isset($_SESSION["loggedInUser"])){
         request.send(data);
     }
     function send_videos(type) {
-        location.replace("http://localhost/ArchiveOfMyself/profile?type=" + type);
+        location.href='./profile?type=' + type;
     }
     function upload_video(){
-        location.replace("http://localhost/ArchiveOfMyself/upload");
+        location.href='./upload';
     }
     function pagegowoosh(type){
         if(type === "login"){
-            window.location.replace("http://localhost/ArchiveOfMyself/login")
+            location.href='./login';
         }
         else{
-            window.location.replace("http://localhost/ArchiveOfMyself/register")
+            location.href='./register';
         }
 
     }

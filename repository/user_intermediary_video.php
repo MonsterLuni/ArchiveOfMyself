@@ -1,5 +1,5 @@
 <?php
-require "./db/connection.php";
+require "connection.php";
 function get_intermediarys_liked_or_disliked($user_id,$likeordislike): array{
     global $conn;
     if($likeordislike){

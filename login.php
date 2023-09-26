@@ -25,7 +25,7 @@
     <?php
     session_start();
     if(isset($_SESSION['loggedInUser'])){
-        header("Location: http://localhost/ArchiveOfMyself/profile");
+        echo "<script>location.href='./profile'</script>";
         die;
     }
     if(isset($_GET['error'])){
