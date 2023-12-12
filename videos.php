@@ -17,11 +17,12 @@ require 'repository/Video_Repository.php';
     foreach ($videos as $video) {
         $intermediary = get_intermediary($_SESSION['loggedInUser'][3],$video[5]);
         echo "
-        <video width='700' height='1244.44' controls>
+        <h2>$video[3]</h2>
+        <video width='480' height='854' controls loop>
             <source src='assets/testvideos/$video[0]' type='video/mp4'>
             Your browser does not support the video tag.
-            Your browser does not support the video tag.
-        </video>";
+        </video>
+        <h2>$video[4]</h2>";
         if(isset($intermediary[0])){
             if($intermediary[0][1]){
                 if($intermediary[0][2] && $intermediary[0][3]){

@@ -57,12 +57,12 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 }
 if(isset($_SESSION["loggedInUser"])){
     $name = $_SESSION["loggedInUser"][0];
-    echo "<title>Profile of $name</title>";
-    echo "<img src='assets/profilepictures/{$_SESSION['loggedInUser'][3]}.png' alt='profilepicture' style='height: 100px; width: auto'>
-          <h1>{$_SESSION['loggedInUser'][0]}</h1>
-          <h2>{$_SESSION['loggedInUser'][1]}</h2>";
-    echo "<p class='tab upload' onclick='upload_video()'>UPLOAD VIDEO</p>";
-    echo "<div id='menu'>";
+    echo "<title>Profile of $name</title>
+    <img src='assets/profilepictures/{$_SESSION['loggedInUser'][3]}.png' alt='profilepicture' style='height: 100px; width: auto'>
+    <h1>{$_SESSION['loggedInUser'][0]}</h1>
+    <h2>{$_SESSION['loggedInUser'][1]}</h2>
+    <p class='tab upload' onclick='upload_video()'>UPLOAD VIDEO</p>
+    <div id='menu'>";
         // Name, Url, Image
         $tabs = [["Uploaded","Uploaded"],["Saved","Saved"],["Liked","Liked"],["Disliked","Disliked"]];
 
@@ -81,58 +81,42 @@ if(isset($_SESSION["loggedInUser"])){
     echo "</div>";
     echo "<div class='videos'>";
     $type = $_GET['type'] ?? "Uploaded";
+    function showVideo($videoSelect): void
+    {
+        echo "
+        <video width='112.50' height='200' controls loop>
+        <source src='assets/testvideos/$videoSelect' type='video/mp4'>
+        Your browser does not support the video tag.
+        Your browser does not support the video tag.
+        </video>";
+    }
+    $videoIsThere = false;
     if($type == "Liked"){
         foreach(videos_fetch_liked($_SESSION['loggedInUser'][3]) as $video){
-                echo "
-                <video width='112.50' height='200' controls>
-                <source src='assets/testvideos/$video[0]' type='video/mp4'>
-                Your browser does not support the video tag.
-                Your browser does not support the video tag.
-                </video>";
-            }
-        if(videos_fetch_liked($_SESSION['loggedInUser'][3]) == null){
-            echo "<p>You don't have any Videos Liked!</p>";
+            showVideo($video[0]);
+            $videoIsThere = true;
         }
     }
     elseif ($type == "Disliked"){
         foreach(videos_fetch_disliked($_SESSION['loggedInUser'][3]) as $video){
-            echo "
-                <video width='112.50' height='200' controls>
-                <source src='assets/testvideos/$video[0]' type='video/mp4'>
-                Your browser does not support the video tag.
-                Your browser does not support the video tag.
-                </video>";
-        }
-        if(videos_fetch_disliked($_SESSION['loggedInUser'][3]) == null){
-            echo "<p>You don't have any Videos Disliked!</p>";
+            showVideo($video[0]);
+            $videoIsThere = true;
         }
     }
-    //TODO: NOCH MACHEN (DIE NÄCHSTEN ZWEI)
     elseif ($type == "Saved"){
         foreach(get_intermediary_saved($_SESSION['loggedInUser'][3]) as $video){
-            echo "
-              <video width='112.50' height='200' controls>
-              <source src='assets/testvideos/$video[0]' type='video/mp4'>
-              Your browser does not support the video tag.
-              Your browser does not support the video tag.
-              </video>";
-        }
-        if(get_intermediary_saved($_SESSION['loggedInUser'][3]) == null){
-            echo "<p>You don't have any Videos Saved!</p>";
+            showVideo($video[0]);
+            $videoIsThere = true;
         }
     }
-    elseif ($type == "Uploaded"){
-     foreach(videos_get_uploaded($_SESSION['loggedInUser'][3]) as $video){
-         echo "
-             <video width='112.50' height='200' controls>
-             <source src='assets/testvideos/$video[0]' type='video/mp4'>
-             Your browser does not support the video tag.
-             Your browser does not support the video tag.
-             </video>";
-     }
-     if(videos_get_uploaded($_SESSION['loggedInUser'][3]) == null){
-         echo "<p>You don't have any Videos uploaded, do you want to make one?</p>";
-     }
+    elseif ($type == "Uploaded") {
+        foreach (videos_get_uploaded($_SESSION['loggedInUser'][3]) as $video) {
+            showVideo($video[0]);
+            $videoIsThere = true;
+        }
+    }
+    if(!$videoIsThere){
+        echo "<p>You don't have any Videos Here!</p>";
     }
     echo "</div>";
 }
