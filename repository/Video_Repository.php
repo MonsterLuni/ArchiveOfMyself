@@ -6,7 +6,7 @@ require 'user_intermediary_comment.php';
  * This file is used for the body on each page.
  */
 
-require "connection.php";
+include_once "connection.php";
 
 if(isset($_POST['title'])){
     session_start();
@@ -19,26 +19,19 @@ if(isset($_POST['title'])){
                       location.href='../upload';
               </script>";
         die;
+
     }
     move_uploaded_file($_FILES['video']["tmp_name"],"C:/xampp/htdocs/ArchiveOfMyself/assets/testvideos/$name" . $id . ".mp4");
     upload_video($_POST['title'] . $id . ".mp4",$_POST['title'],$_POST['description']);
     echo "<script>location.href='../profile'</script>";
     die;
 }
-
-function makeQuery($queryText): array
-{
-    global $conn;
-    $query = $conn->query($queryText);
-    return $query->fetch_all();
-}
-
 function videos_fetch_all(): array{
-    return makeQuery("SELECT * FROM videos ORDER BY RAND()");
+    return makeQueryFetch("SELECT * FROM videos ORDER BY RAND()");
 }
 
 function videos_get_uploaded($user_id): array{
-    return makeQuery("SELECT * FROM videos WHERE `fk_uploaded_from_id` LIKE $user_id");
+    return makeQueryFetch("SELECT * FROM videos WHERE `fk_uploaded_from_id` LIKE $user_id");
 }
 
 function videos_fetch_liked($user_id): array{
@@ -58,14 +51,14 @@ function videos_fetch_disliked($user_id): array{
     return $memory;
 }
 function video_fetch($id): array{
-    return makeQuery("SELECT * FROM videos WHERE id LIKE $id");
+    return makeQueryFetch("SELECT * FROM videos WHERE id LIKE $id");
 }
 function video_fetch_by_title($title): array{
-    return makeQuery("SELECT * FROM videos WHERE text LIKE '$title'");
+    return makeQueryFetch("SELECT * FROM videos WHERE text LIKE '$title'");
 }
 
 function comments_fetch($video): array{
-    return makeQuery("SELECT * FROM comments WHERE video_fk LIKE $video[5] ORDER BY RAND()");
+    return makeQueryFetch("SELECT * FROM comments WHERE video_fk LIKE $video[5] ORDER BY RAND()");
 }
 function video_review($video_id,$operator,$user_id): void{
     global $conn;
@@ -126,8 +119,7 @@ function video_review($video_id,$operator,$user_id): void{
 }
 
 function upload_video($url, $title, $description): bool{
-    global $conn;
-    $conn->query("INSERT INTO `videos`(`url`, `text`, `description`, `fk_uploaded_from_id`) VALUES ('$url','$title','$description','{$_SESSION['loggedInUser'][3]}')");
+    makeQuery("INSERT INTO `videos`(`url`, `text`, `description`, `fk_uploaded_from_id`,`likes`,`dislikes`) VALUES ('$url','$title','$description','{$_SESSION['loggedInUser'][3]}',0,0)");
     return true;
 }
 // ------------------------------------------------------------------------------

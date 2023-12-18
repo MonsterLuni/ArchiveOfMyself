@@ -1,5 +1,5 @@
 <?php
-require "connection.php";
+include_once "connection.php";
 
 if(isset($_POST['description'])){
     session_start();
@@ -25,19 +25,16 @@ function verify($username,$pword): string{
         return "Found no User with this Username";
     }
 }
-function add_user($username,$description,$image,$passwd){
-    global $conn;
+function add_user($username,$description,$image,$passwd): true
+{
     $hash = password_hash($passwd,PASSWORD_BCRYPT);
-    $query = $conn->query("INSERT INTO `user`(`username`, `description`, `image`,`passwd`) VALUES ('$username','$description','$image','$hash')");
+    makeQuery("INSERT INTO `user`(`username`, `description`, `image`,`passwd`) VALUES ('$username','$description','$image','$hash')");
     return true;
 }
 function get_user_from_username($username): array{
-    global $conn;
-    $query = $conn->query("SELECT * FROM `user` WHERE `username` LIKE '$username'");
-    return $query->fetch_all();
+    return makeQueryFetch("SELECT * FROM `user` WHERE `username` LIKE '$username'");
 }
-function get_user($id){
-    global $conn;
-    $query = $conn->query("SELECT * FROM `user` WHERE $id");
-    return $query->fetch_all();
+function get_user($id): array
+{
+    return makeQueryFetch("SELECT * FROM `user` WHERE $id");
 }
